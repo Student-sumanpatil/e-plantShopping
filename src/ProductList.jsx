@@ -6,9 +6,10 @@ import { addItem } from './CartSlice';
 
 function ProductList({ onHomeClick }) {
   const [showCart, setShowCart] = useState(false);
-  const [addedToCart, setAddedToCart] = useState({}); // track added products
+  const [addedToCart, setAddedToCart] = useState({});
   const dispatch = useDispatch();
-  const cartCount = useSelector(state => 
+
+  const cartCount = useSelector(state =>
     state.cart.items.reduce((acc, item) => acc + item.quantity, 0)
   );
 
@@ -61,13 +62,9 @@ function ProductList({ onHomeClick }) {
     },
   ];
 
-  // Add plant to cart
   const handleAddToCart = (product) => {
     dispatch(addItem(product));
-    setAddedToCart((prevState) => ({
-      ...prevState,
-      [product.name]: true,
-    }));
+    setAddedToCart(prev => ({ ...prev, [product.name]: true }));
   };
 
   const handleHomeClick = (e) => {
@@ -110,17 +107,10 @@ function ProductList({ onHomeClick }) {
         </div>
 
         <div className="navbar-links">
-          <a href="#" onClick={handlePlantsClick}>
-            Plants
-          </a>
+          <a href="#" onClick={handlePlantsClick}>Plants</a>
           <a href="#" onClick={handleCartClick} className="cart-link">
             <div className="cart-icon-wrapper">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 256 256"
-                height="68"
-                width="68"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" height="68" width="68">
                 <rect width="156" height="156" fill="none"></rect>
                 <circle cx="80" cy="216" r="12"></circle>
                 <circle cx="184" cy="216" r="12"></circle>
@@ -148,24 +138,16 @@ function ProductList({ onHomeClick }) {
               <div className="product-list">
                 {category.plants.map((plant, plantIndex) => (
                   <div className="product-card" key={plantIndex}>
-                    <img
-                      className="product-image"
-                      src={plant.image}
-                      alt={plant.name}
-                    />
+                    <img className="product-image" src={plant.image} alt={plant.name} />
                     <div className="product-title">{plant.name}</div>
                     <div className="product-description">{plant.description}</div>
                     <div className="product-cost">{plant.cost}</div>
                     <button
-                      className={`product-button ${
-                        addedToCart[plant.name] ? 'added-to-cart' : ''
-                      }`}
+                      className={`product-button ${addedToCart[plant.name] ? 'added-to-cart' : ''}`}
                       onClick={() => handleAddToCart(plant)}
                       disabled={addedToCart[plant.name]}
                     >
-                      {addedToCart[plant.name]
-                        ? "Added to Cart ✅"
-                        : "Add to Cart"}
+                      {addedToCart[plant.name] ? "Added to Cart ✅" : "Add to Cart"}
                     </button>
                   </div>
                 ))}
