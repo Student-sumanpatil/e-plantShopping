@@ -10,7 +10,7 @@ const CartItem = ({ onContinueShopping }) => {
   // ✅ Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
     return cart.reduce((total, item) => {
-      const price = parseFloat(item.cost.replace('$', '')); // remove $
+      const price = parseFloat(item.cost.replace('$', ''));
       return total + price * item.quantity;
     }, 0).toFixed(2);
   };
@@ -18,7 +18,13 @@ const CartItem = ({ onContinueShopping }) => {
   // ✅ Continue shopping button handler
   const handleContinueShopping = (e) => {
     e.preventDefault();
-    onContinueShopping(); // call parent function from ProductList
+    onContinueShopping();
+  };
+
+  // ✅ Checkout button handler (placeholder)
+  const handleCheckoutShopping = (e) => {
+    e.preventDefault();
+    alert('Functionality to be added for future reference');
   };
 
   // ✅ Increment quantity
@@ -26,10 +32,12 @@ const CartItem = ({ onContinueShopping }) => {
     dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
   };
 
-  // ✅ Decrement quantity (but not below 1)
+  // ✅ Decrement quantity or remove if quantity is 1
   const handleDecrement = (item) => {
     if (item.quantity > 1) {
       dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
+    } else {
+      dispatch(removeItem(item.name));
     }
   };
 
@@ -40,15 +48,20 @@ const CartItem = ({ onContinueShopping }) => {
 
   // ✅ Calculate total cost per item
   const calculateTotalCost = (item) => {
-    const price = parseFloat(item.cost.replace('$', '')); // remove $
+    const price = parseFloat(item.cost.replace('$', ''));
     return (price * item.quantity).toFixed(2);
   };
 
   return (
     <div className="cart-container">
-      <h2 style={{ color: 'black' }}>Total Cart Amount: ${calculateTotalAmount()}</h2>
-      <div>
-        {cart.map(item => (
+      <h2 style={{ color: 'black' }}>
+        Total Cart Amount: ${calculateTotalAmount()}
+      </h2>
+
+      {cart.length === 0 ? (
+        <p>Your cart is empty. Add some plants to purify your space 🌿</p>
+      ) : (
+        cart.map(item => (
           <div className="cart-item" key={item.name}>
             <img className="cart-item-image" src={item.image} alt={item.name} />
             <div className="cart-item-details">
@@ -65,6 +78,7 @@ const CartItem = ({ onContinueShopping }) => {
                 <button
                   className="cart-item-button cart-item-button-inc"
                   onClick={() => handleIncrement(item)}
+                  disabled={item.quantity >= 10} // optional max limit
                 >
                   +
                 </button>
@@ -80,17 +94,23 @@ const CartItem = ({ onContinueShopping }) => {
               </button>
             </div>
           </div>
-        ))}
-      </div>
+        ))
+      )}
+
       <div className="continue_shopping_btn">
         <button
           className="get-started-button"
-          onClick={(e) => handleContinueShopping(e)}
+          onClick={handleContinueShopping}
         >
           Continue Shopping
         </button>
         <br />
-        <button className="get-started-button1">Checkout</button>
+        <button
+          className="get-started-button1"
+          onClick={handleCheckoutShopping}
+        >
+          Checkout
+        </button>
       </div>
     </div>
   );
