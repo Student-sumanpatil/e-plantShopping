@@ -14,18 +14,29 @@ body {
 .navbar-custom {
     background-color: #4CAF50;
     color: #fff !important;
-    padding: 15px;
+    padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 20px;
 }
 
+.luxury {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.luxury img {
+    width: 50px;
+    height: 50px;
+}
+
 .navbar-links {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 250px;
+    gap: 20px;
 }
 
 .navbar-links a {
@@ -74,18 +85,18 @@ body {
 /* Product Card */
 .product-card {
     position: relative;
-    flex: 0 0 calc(33.33% - 20px);
-    max-width: calc(33.33% - 20px);
+    flex: 0 0 calc(30% - 20px);
+    max-width: 300px;
     margin-bottom: 20px;
     padding: 20px;
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 10px;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .product-card:hover {
@@ -96,21 +107,22 @@ body {
 
 .product-title {
     font-weight: bold;
-    margin-bottom: 10px;
-    font-size: 1.2rem;
+    margin: 10px 0;
+    font-size: 1.3rem;
 }
 
 .product-description {
-    margin-bottom: 10px;
-    font-size: 0.95rem;
-    color: #444;
+    margin: 10px 0;
+    font-size: 0.9rem;
+    color: #555;
+    min-height: 40px;
 }
 
 .product-cost {
     color: #e74c3c;
     font-size: 1.2rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
 .product-image {
@@ -130,7 +142,11 @@ body {
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    display: block;
+    margin: 15px auto 0; /* center + spacing */
+        width: fit-content;
 }
+
 
 .product-button:hover:not(:disabled) {
     background-color: #45a049;
@@ -138,9 +154,8 @@ body {
 
 .product-button.added-to-cart,
 .product-button:disabled {
-    /*background-color: grey;*/
-    cursor: not-allowed;
     background-color: #888;
+    cursor: not-allowed;
     font-style: italic;
 }
 
@@ -155,11 +170,12 @@ body {
     text-align: center;
     color: #2c3e50;
 }
+
 /* SALE badge */
 .sale-badge {
     position: absolute;
     top: 10px;
-    left: 10px;
+    right: 10px;
     background-color: red;
     color: white;
     font-weight: bold;

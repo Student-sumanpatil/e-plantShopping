@@ -28,23 +28,38 @@ const CartItem = () => {
 
   return (
     <div className="cart-container">
-      <h2>Total Cart Amount: ${totalAmount}</h2>
-      {cartItems.map((item, index) => (
-        <div className="cart-item" key={index}>
-          <img src={item.image} alt={item.name} className="cart-image" />
-          <div className="cart-details">
-            <h3>{item.name}</h3>
-            <p>Price: {item.cost}</p>
-            <div className="quantity-controls">
-              <button onClick={() => handleDecrease(item)}>-</button>
-              <span>{item.quantity}</span>
-              <button onClick={() => handleIncrease(item)}>+</button>
+      <h2 className="cart-total">Total Cart Amount: ${totalAmount}</h2>
+
+      {cartItems.length === 0 ? (
+        <p style={{ textAlign: 'center', fontSize: '1.2rem', marginTop: '20px' }}>
+          Your cart is empty 🛒
+        </p>
+      ) : (
+        cartItems.map((item, index) => (
+          <div className="cart-item" key={index}>
+            <img src={item.image} alt={item.name} />
+
+            <div className="cart-item-details">
+              <h3>{item.name}</h3>
+              <p>Price: {item.cost}</p>
+
+              <div className="quantity-controls">
+                <button onClick={() => handleDecrease(item)}>-</button>
+                <span>{item.quantity}</span>
+                <button onClick={() => handleIncrease(item)}>+</button>
+              </div>
+
+              <p>Total: ${item.quantity * parseInt(item.cost.replace('$', ''))}</p>
+              <button
+                className="delete-button"
+                onClick={() => handleDelete(item.name)}
+              >
+                Delete
+              </button>
             </div>
-            <p>Total: ${item.quantity * parseInt(item.cost.replace('$', ''))}</p>
-            <button className="delete-button" onClick={() => handleDelete(item.name)}>Delete</button>
           </div>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 };
